@@ -1,20 +1,54 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React from 'react';
+import Homepage from './Homepage';
+import { LoginScreen, SwipePage } from './screens';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { setUser } from './utils/set_user';
+
+const Stack = createNativeStackNavigator<AppStackParamList>();
+
+const appStackNavigatorProps: Omit<StackNavigatorOptions<AppStackParamList>, 'children'> = {
+	initialRouteName: 'Homepage',
+	screenOptions: {
+		headerShown: false
+	}
+};
+
+const appStackRoutes: AppStackRoutesType = [
+	{
+		name: 'Homepage',
+		component: Homepage,
+	},
+	{
+		name: 'Login',
+		component: LoginScreen,
+		options: {
+			presentation: 'modal',
+			animation: 'slide_from_right'
+		}
+	},
+	{
+		name: 'Swipe',
+		component: SwipePage
+	}
+];
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
+	React.useEffect(() => {
+		(
+			async function() {
+				await setUser();
+			}
+		)();
+	});
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+	return (
+		<NavigationContainer>
+			<Stack.Navigator {...appStackNavigatorProps}>
+				{appStackRoutes.map((stackRoute) => (
+					<Stack.Screen key={stackRoute.name} {...stackRoute} />
+				))}
+			</Stack.Navigator>
+		</NavigationContainer>
+	);
+}
