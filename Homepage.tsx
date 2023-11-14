@@ -2,14 +2,14 @@ import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import * as SecureStore from 'expo-secure-store';
 
-async function checkIfLoggedIn() {
-	const accessToken = await SecureStore.getItemAsync('accessToken');
-	const refreshToken = await SecureStore.getItemAsync('refreshToken');
-
-	return { accessToken, refreshToken };
-}
-
 export default function Homepage({ navigation }: HomepageScreenProps) {
+	async function checkIfLoggedIn() {
+		const accessToken = await SecureStore.getItemAsync('accessToken');
+		const refreshToken = await SecureStore.getItemAsync('refreshToken');
+	
+		return { accessToken, refreshToken };
+	}
+
 	checkIfLoggedIn().then((tokens) => {
 		if (!tokens.accessToken || !tokens.refreshToken) {
 			navigation.navigate('Login');

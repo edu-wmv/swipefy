@@ -3,6 +3,7 @@ import { makeRedirectUri } from 'expo-auth-session';
 import { saveOnSecureStore } from './secure_store';
 
 export async function exchangeCodeForToken(code: string, code_verifier: string): Promise<number> {  
+
 	const response = await axios({
 		method: 'post',
 		url: 'https://accounts.spotify.com/api/token',

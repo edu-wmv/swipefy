@@ -3,7 +3,6 @@ import Homepage from './Homepage';
 import { LoginScreen, SwipePage } from './screens';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { setUser } from './utils/set_user';
 
 const Stack = createNativeStackNavigator<AppStackParamList>();
 
@@ -34,14 +33,6 @@ const appStackRoutes: AppStackRoutesType = [
 ];
 
 export default function App() {
-	React.useEffect(() => {
-		(
-			async function() {
-				await setUser();
-			}
-		)();
-	});
-
 	return (
 		<NavigationContainer>
 			<Stack.Navigator {...appStackNavigatorProps}>

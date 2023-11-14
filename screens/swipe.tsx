@@ -5,7 +5,6 @@ import { StatusBar } from 'expo-status-bar';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function SwipePage() {
-
 	return (
 		<SafeAreaView style={styles.container}>
 			<Header />

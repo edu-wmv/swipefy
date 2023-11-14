@@ -52,8 +52,8 @@ declare global {
     email: string;
     images: Array<{
       height: number;
-      url: string;
       width: number;
+      url: string;
     }>;
   }
   

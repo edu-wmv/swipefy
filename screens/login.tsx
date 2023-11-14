@@ -4,11 +4,14 @@ import * as WebBrowser from 'expo-web-browser';
 import * as AuthSession from 'expo-auth-session';
 import { Entypo } from '@expo/vector-icons';
 import { exchangeCodeForToken } from '../utils/login_flow';
+import { useAuthStore } from '../context/store';
 
 WebBrowser.maybeCompleteAuthSession();
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default function LoginScreen({ navigation }: LoginScreenProps) {
+	const setUser = useAuthStore();
+
 
 	const [request, response, promptAsync] = AuthSession.useAuthRequest(
 		{
@@ -31,7 +34,10 @@ export default function LoginScreen({ navigation }: LoginScreenProps) {
 		await promptAsync();
 		if (response?.type === 'success' && request?.codeVerifier) {
 			const status = await exchangeCodeForToken(response.params.code, request?.codeVerifier);
-			status !== 200 && Alert.alert('Error', 'Something went wrong');
+			status !== 200 ? Alert.alert('Error', 'Something went wrong') : {
+
+			};
+
 		} else {
 			Alert.alert('Error', 'Something went wrong');
 		}
