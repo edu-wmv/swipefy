@@ -1,7 +1,8 @@
-import { getFromSecureStore } from '../secure_store';
+import { useAuthStore } from '../../context/store';
 
 export async function getCurrentUserData(): Promise<currentUserData> {
-	const access_token = await getFromSecureStore('access_token');
+	const user = useAuthStore.getState().user;
+	const access_token = user.access_token;
 	const response = await fetch('https://api.spotify.com/v1/me', {
 		method: 'GET',
 		headers: {

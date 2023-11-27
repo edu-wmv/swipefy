@@ -1,19 +1,19 @@
 import { create } from 'zustand';
 
 type State = {
-  user: null | {
+  user: {
     access_token: string | null;
     refresh_token: string | null;
     isUserLoggedIn: boolean;
   };
   setUser: (user: State['user']) => void;
-  isAuthCompleted: boolean;
-  setAuthCompleted: (isAuthCompleted: boolean) => void;
 }
 
 export const useAuthStore = create<State>((set) => ({
-	user: null,
+	user: {
+		access_token: null,
+		refresh_token: null,
+		isUserLoggedIn: false,
+	},
 	setUser: (user) => set({ user }),
-	isAuthCompleted: false,
-	setAuthCompleted: (isAuthCompleted) => set({ isAuthCompleted })
 }));

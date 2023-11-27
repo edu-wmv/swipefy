@@ -3,11 +3,12 @@ import Homepage from './Homepage';
 import { LoginScreen, SwipePage } from './screens';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { useAuthStore } from './context/store';
+import { getUserLoggedIn } from './utils/hooks';
 
 const Stack = createNativeStackNavigator<AppStackParamList>();
 
 const appStackNavigatorProps: Omit<StackNavigatorOptions<AppStackParamList>, 'children'> = {
-	initialRouteName: 'Homepage',
 	screenOptions: {
 		headerShown: false
 	}
@@ -29,13 +30,31 @@ const appStackRoutes: AppStackRoutesType = [
 	{
 		name: 'Swipe',
 		component: SwipePage
-	}
+	},
 ];
 
 export default function App() {
+	const [isLoading, setIsLoading] = React.useState<boolean>(true);
+	const user = useAuthStore.getState().user;
+	const setUser = useAuthStore.getState().setUser;
+
+	React.useEffect(() => {
+		async function asyncSubscribe() {
+			const isUserLoggedIn = await getUserLoggedIn();
+			setUser(isUserLoggedIn);
+			setIsLoading(false);
+		};
+
+		asyncSubscribe();
+	}, []);
+
+	if (isLoading) {
+		return null;
+	}
+
 	return (
 		<NavigationContainer>
-			<Stack.Navigator {...appStackNavigatorProps}>
+			<Stack.Navigator {...appStackNavigatorProps} initialRouteName={user?.isUserLoggedIn === true ? 'Swipe' : 'Login'}>
 				{appStackRoutes.map((stackRoute) => (
 					<Stack.Screen key={stackRoute.name} {...stackRoute} />
 				))}

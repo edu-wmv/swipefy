@@ -5,7 +5,12 @@ async function saveOnSecureStore(key: string, value: string) {
 }
 
 async function getFromSecureStore(key: string): Promise<string | null> {
-	return await SecureStore.getItemAsync(key);
+	try {
+		return await SecureStore.getItemAsync(key);
+	} catch (error) {
+		console.log('Error getting data from secure store', error);
+		return null;
+	}
 }
 
 export { saveOnSecureStore, getFromSecureStore };

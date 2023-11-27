@@ -1,6 +1,8 @@
 import axios from 'axios';
+import { saveOnSecureStore } from '../../secure_store';
 
-const reAuthUser = async (access_token: string, refresh_token: string) => {
+const reAuthUser = async (refresh_token: string) => {
+
 	const response = await axios({
 		method: 'post',
 		url: 'https://accounts.spotify.com/api/token',
@@ -13,6 +15,9 @@ const reAuthUser = async (access_token: string, refresh_token: string) => {
 			'Content-Type': 'application/x-www-form-urlencoded',
 		},
 	});
+
+	saveOnSecureStore('access_token', response.data.access_token);
+	saveOnSecureStore('refresh_token', response.data.refresh_token);
 
 	return {
 		access_token: response.data.access_token,
