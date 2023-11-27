@@ -1,14 +1,20 @@
-import { getFromSecureStore } from '../secure_store';
+import axios from 'axios';
+import { useAuthStore } from '../../context/store';
 
 export async function getCurrentUserPlaylists(): Promise<currentUserPlaylists> {
-	const access_token = await getFromSecureStore('access_token');
-	const response = await fetch('https://api.spotify.com/v1/me/playlists', {
-		method: 'GET',
+	const user = useAuthStore.getState().user;
+
+	const response = await axios({
+		method: 'get',
+		url: 'https://api.spotify.com/v1/me/playlists',
 		headers: {
-			Authorization: `Bearer ${access_token}`,
+			Authorization: `Bearer ${user.access_token}`,
 		},
+		data: {
+			limit: 10,
+		}
 	});
 
-	const data = await response.json();
-	return data;
+	console.log(response.data);
+	return response.data;
 }
