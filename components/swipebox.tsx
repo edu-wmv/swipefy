@@ -1,27 +1,15 @@
-import { StyleSheet, View, Text, Image } from 'react-native';
+import { Image, StyleSheet, Text, View } from 'react-native';
 import React from 'react';
 import { moderateScale } from 'react-native-size-matters';
-import { getCurrentUserData } from '../utils/hooks';
 
 export default function SwipeBox() {
-	const [user, setUser] = React.useState<currentUserData>();
-
-	React.useEffect(() => {
-		(
-			async () => {
-				console.log('fetching user data');
-				setUser(await getCurrentUserData());
-			}
-		)();
-	});
-
-
 	return (
 		<View style={styles.container}>
 			<View style={styles.cardBox}>
 				<View style={styles.card}>
-					<Image source={{ uri: user?.images[1].url }} style={{ width: 200, height: 200 }} />
-					<Text>{user?.display_name}</Text>
+					<Image source={{ uri: 'https://i.scdn.co/image/ab67616d0000b273e787cffec20aa2a396a61647' }} style={styles.cover} />
+					<Text>Afterglow</Text>
+					<Text>Taylor Swift</Text>
 				</View>
 			</View>
 		</View>
@@ -31,12 +19,11 @@ export default function SwipeBox() {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		// backgroundColor: '#f0f0f0',
-		backgroundColor: 'red',
 		alignItems: 'center',
-		justifyContent: 'center',
+		justifyContent: 'flex-start',
 		width: '100%',
 		height: '100%',
+		paddingTop: 40
 	},
 	cardBox: {
 		justifyContent: 'center',
@@ -45,8 +32,17 @@ const styles = StyleSheet.create({
 		height: '80%'
 	},
 	card: {
-		backgroundColor: 'blue',
+		backgroundColor: '#fafafa',
 		width: '100%',
 		height: '100%',
+		borderRadius: 15,
+		flex: 1,
+		alignItems: 'center',
+		paddingTop: 30
+	},
+	cover: {
+		width: '80%',
+		aspectRatio: 1/1,
+		borderRadius: 10
 	}
 });

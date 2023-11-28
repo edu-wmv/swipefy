@@ -40,9 +40,11 @@ export default function App() {
 
 	React.useEffect(() => {
 		async function asyncSubscribe() {
+			console.log('fetching user');
 			const isUserLoggedIn = await getUserLoggedIn();
 			setUser(isUserLoggedIn);
 			setIsLoading(false);
+			console.log('user fetched');
 		};
 
 		asyncSubscribe();

@@ -2,6 +2,7 @@ import axios from 'axios';
 import { saveOnSecureStore } from '../../secure_store';
 
 const reAuthUser = async (refresh_token: string) => {
+	console.log(refresh_token);
 
 	const response = await axios({
 		method: 'post',
