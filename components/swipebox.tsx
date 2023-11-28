@@ -10,6 +10,9 @@ export default function SwipeBox() {
 					<Image source={{ uri: 'https://i.scdn.co/image/ab67616d0000b273e787cffec20aa2a396a61647' }} style={styles.cover} />
 					<Text>Afterglow</Text>
 					<Text>Taylor Swift</Text>
+					<View>
+						
+					</View>
 				</View>
 			</View>
 		</View>
